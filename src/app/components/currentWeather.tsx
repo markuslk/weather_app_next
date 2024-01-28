@@ -1,28 +1,43 @@
-export default function CurrentWeather() {
+import { City, OpenWeatherData } from "../lib/types";
+import { convertToDate } from "../lib/dateUtils";
+import Clock from "./Clock";
+
+interface CurrentWeatherProps {
+	data: OpenWeatherData;
+	city?: OpenWeatherData;
+}
+
+export default function CurrentWeather({ data }: CurrentWeatherProps) {
+	const initial = new Date();
+
 	return (
 		<>
-			<div className="border border-gray-600 p-6 flex flex-col w-full min-w-80 md:w-1/2 rounded-lg gap-6 text-center text-gray-300">
+			<div className="p-6 flex flex-col w-full min-w-80 md:w-1/2 rounded-xl gap-6 text-center text-gray-300 border border-gray-600 border-opacity-60 bg-zinc-950">
 				{/* Date & Time */}
 				<div className="flex flex-row justify-between font-semibold text-lg">
-					<p>Friday</p>
-					<p className="tabular-nums">10:58:11</p>
+					<p>{convertToDate(data.timezone, data.dt, "long")}</p>
+					<Clock
+						initial={initial}
+						timezone={data.timezone}
+					/>
 				</div>
 				{/* Location */}
 				<div>
-					<p className="font-light tracking-wider text-gray-400">Nõo, Estonia</p>
+					<p className="font-light tracking-wider text-gray-400">{data.name}</p>
 				</div>
 				{/* Degrees & Feels like? */}
 				<div className="flex flex-col gap-2">
-					<div className="text-7xl">8&deg;</div>
-					<div className="text-sm tracking-wider font-light text-gray-500">
-						Feels like <span className="text-base">9&deg;</span>
-					</div>
+					<div className="text-7xl font-medium">{Math.round(data.main.temp)}&deg;</div>
+					<div className="text-sm tracking-wider font-light text-gray-500">Feels like {Math.round(data.main.feels_like)}&deg;</div>
 				</div>
 				{/* Conditions, high and low */}
-				<div className="flex flex-col gap-1">
+				<div className="flex flex-col gap-1 items-center">
 					{/* Icon? */}
-					<p className="font-light">Snowy</p>
-					<p className="font-extralight text-gray-500">H: 10&deg; L: 5&deg;</p>
+					<div className="font-light">{data.weather[0].main}</div>
+					<div className="font-extralight text-gray-500 flex gap-2">
+						<span>H: {Math.round(data.main.temp_max)}&deg;</span>
+						<span>L: {Math.round(data.main.temp_min)}&deg;</span>
+					</div>
 				</div>
 			</div>
 		</>
