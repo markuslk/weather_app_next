@@ -1,12 +1,9 @@
 import { Metadata } from "next/types";
-import CurrentWeather from "./components/currentWeather";
+import CurrentWeather from "./components/CurrentWeather";
 import { DEFAULT_LOCATAION } from "./lib/config";
-
-// async function getData() {
-// 	const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/weather`);
-// 	const data = await res.json();
-// 	return data;
-// }
+import { getWeatherData } from "./actions/getWeatherData";
+import { notFound } from "next/navigation";
+import { OpenWeatherData } from "./lib/types";
 
 export const metadata: Metadata = {
 	title: `${DEFAULT_LOCATAION.city} - Weather Forecast`,
@@ -14,16 +11,20 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-	// const { lat, lon } = DEFAULT_LOCATAION.coord;
+	const { lat, lon } = DEFAULT_LOCATAION.coord;
 
-	// const WeatherData = await getData();
+	const CurrentWeatherRequest: OpenWeatherData = await getWeatherData({ lat, lon });
 
-	// console.log(WeatherData);
+	const current_weather_data = await Promise.all([CurrentWeatherRequest]);
+
+	console.log(current_weather_data);
+
+	if (!current_weather_data) return notFound();
 
 	return (
 		<>
 			<div className="flex flex-col gap-4 md:flex-row p-8 md:p-32 justify-center">
-				<CurrentWeather />
+				<CurrentWeather data={current_weather_data?.[0]} />
 			</div>
 		</>
 	);
