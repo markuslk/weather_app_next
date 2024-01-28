@@ -13,12 +13,7 @@ export type OpenWeatherData = {
 		lon: number;
 		lat: number;
 	};
-	weather: {
-		id: number;
-		main: string;
-		description: string;
-		icon: string;
-	}[];
+	weather: Weather[];
 	base: string;
 	main: {
 		temp: number;
