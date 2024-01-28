@@ -1,6 +1,7 @@
-import { City, OpenWeatherData } from "../lib/types";
+import { OpenWeatherData } from "../lib/types";
 import { convertToDate } from "../lib/dateUtils";
 import Clock from "./Clock";
+import WeatherIcon from "./WeatherIcon";
 
 interface CurrentWeatherProps {
 	data: OpenWeatherData;
@@ -31,8 +32,9 @@ export default function CurrentWeather({ data }: CurrentWeatherProps) {
 					<div className="text-sm tracking-wider font-light text-gray-500">Feels like {Math.round(data.main.feels_like)}&deg;</div>
 				</div>
 				{/* Conditions, high and low */}
-				<div className="flex flex-col gap-1 items-center">
-					{/* Icon? */}
+				<div className="flex flex-col gap-4 items-center">
+					{/* Icon */}
+					<WeatherIcon weatherCode={data.weather[0].id} />
 					<div className="font-light">{data.weather[0].main}</div>
 					<div className="font-extralight text-gray-500 flex gap-2">
 						<span>H: {Math.round(data.main.temp_max)}&deg;</span>
