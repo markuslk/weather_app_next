@@ -1,11 +1,11 @@
 import { Metadata } from "next/types";
 import CurrentWeather from "./components/CurrentWeather";
 import { DEFAULT_LOCATAION } from "./lib/config";
-import { getWeatherData } from "./actions/getWeatherData";
+import { getWeatherData } from "../actions/getWeatherData";
 import { notFound } from "next/navigation";
 import { OpenWeatherData, TenDayForecastData } from "./lib/types";
 import SearchBar from "./components/SearchBar";
-import { getForecastData } from "./actions/getForecastData";
+import { getForecastData } from "../actions/getForecastData";
 
 export const metadata: Metadata = {
 	title: `${DEFAULT_LOCATAION.city} - Weather Forecast`,
