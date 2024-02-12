@@ -13,7 +13,7 @@ export default function CurrentWeather({ data, city }: CurrentWeatherProps) {
 
 	return (
 		<>
-			<div className="p-6 flex flex-col w-full min-w-80 md:w-1/2 rounded-xl gap-6 text-center text-gray-300 border border-gray-600 border-opacity-60 bg-zinc-950">
+			<div className="px-6 py-8 flex flex-col w-full min-w-80 max-w-lg rounded-xl gap-6 text-center text-gray-300 border border-gray-600 border-opacity-60 bg-zinc-950">
 				{/* Date & Time */}
 				<div className="flex flex-row justify-between font-semibold text-lg">
 					<p>{convertToDate(city.timezone, data.dt, "long")}</p>
