@@ -9,6 +9,7 @@ export type Location = {
 };
 
 export type OpenWeatherData = {
+	city: City;
 	coord: {
 		lon: number;
 		lat: number;
@@ -52,6 +53,49 @@ type Weather = {
 	icon: string;
 };
 
+export type ForecastData = {
+	dt: number;
+	main: {
+		temp: number;
+		feels_like: number;
+		temp_min: number;
+		temp_max: number;
+		pressure: number;
+		humidity: number;
+	};
+	weather: {
+		id: number;
+		main: string;
+		description: string;
+		icon: string;
+	}[];
+	clouds: {
+		all: number;
+	};
+	wind: {
+		speed: number;
+		deg: number;
+		gust: number;
+	};
+	visibility: number;
+	pop: number;
+	rain?: {
+		"1h": number;
+	};
+	sys: {
+		pod: "d" | "n";
+	};
+	dt_txt: string;
+};
+
+export type ForecastDataResponse = {
+	cod: string;
+	message: number;
+	cnt: number;
+	list: ForecastData[];
+	city: City;
+};
+
 export type City = {
 	id: number;
 	name: string;
@@ -64,45 +108,4 @@ export type City = {
 	timezone: number;
 	sunrise: number;
 	sunset: number;
-};
-
-type Temperature = {
-	day: number;
-	min: number;
-	max: number;
-	night: number;
-	eve: number;
-	morn: number;
-};
-
-type FeelsLike = {
-	day: number;
-	night: number;
-	eve: number;
-	morn: number;
-};
-
-export type ForecastData = {
-	dt: number;
-	sunrise: number;
-	sunset: number;
-	temp: Temperature;
-	feels_like: FeelsLike;
-	pressure: number;
-	humidity: number;
-	weather: Weather[];
-	speed: number;
-	deg: number;
-	gust: number;
-	clouds: number;
-	pop: number;
-	rain?: number;
-};
-
-export type TenDayForecastData = {
-	city: City;
-	cod: string;
-	message: number;
-	cnt: number;
-	list: ForecastData[];
 };
