@@ -29,6 +29,7 @@ export default function Loading() {
 					</div>
 				</div>
 			</div>
+			<div className="w-full max-w-lg min-w-80 mx-auto rounded-md animate-pu h-40 bg-gray-600"></div>
 		</>
 	);
 }
