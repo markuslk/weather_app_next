@@ -24,8 +24,6 @@ export default async function Home() {
 
 	if (!current_weather_data || !forecast_weather_data) return notFound();
 
-	console.log(forecast_weather_data);
-
 	return (
 		<>
 			<div className="p-8 md:p-32 flex justify-center flex-col items-center gap-12">

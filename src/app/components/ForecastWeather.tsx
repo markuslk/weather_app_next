@@ -1,6 +1,4 @@
 import { ForecastData } from "../lib/types";
-import { convertToDate } from "../lib/dateUtils";
-import Clock from "./Clock";
 import WeatherIcon from "./WeatherIcon";
 
 interface ForecastWeatherProps {
@@ -8,36 +6,24 @@ interface ForecastWeatherProps {
 }
 
 export default function ForecastWeather({ data }: ForecastWeatherProps) {
-	const initial = new Date();
-
+	function getHoursFromDate(dt: number): number {
+		const date = new Date(dt * 1000);
+		return date.getHours();
+	}
 	return (
 		<>
-			<div className="p-6 flex flex-col w-full min-w-80 md:w-1/2 rounded-xl gap-6 text-center text-gray-300 border border-gray-600 border-opacity-60 bg-zinc-950">
-				{/* Date & Time */}
-				{/* <div className="flex flex-row justify-between font-semibold text-lg">
-					<p>{convertToDate(city.timezone, data.dt, "long")}</p>
-					<Clock
-						initial={initial}
-						timezone={city.timezone}
-					/>
-				</div> */}
-				{/* Location */}
-				<div></div>
-				{/* Degrees & Feels like? */}
-				<div className="flex flex-col gap-2">
-					{/* <div className="text-7xl font-medium">{Math.round(data.main.temp)}&deg;</div> */}
-					{/* <div className="text-sm tracking-wider font-light text-gray-500">Feels like {Math.round(data.main.feels_like)}&deg;</div> */}
-				</div>
-				{/* Conditions, high and low */}
-				<div className="flex flex-col gap-4 items-center">
-					{/* Icon */}
-					{/* <WeatherIcon weatherCode={data.weather[0].id} /> */}
-					{/* <div className="font-light">{data.weather[0].main}</div> */}
-					{/* <div className="font-extralight text-gray-500 flex gap-2">
-						<span>H: {Math.round(data.main.temp_max)}&deg;</span>
-						<span>L: {Math.round(data.main.temp_min)}&deg;</span>
-					</div> */}
-				</div>
+			<div className="forecast-scrollbar p-6 flex justify-between w-full max-w-lg min-w-80 rounded-xl gap-16 text-center text-gray-300 border border-gray-600 border-opacity-60 bg-zinc-950 overflow-x-scroll">
+				{data.slice(0, 30).map((item: ForecastData, i) => (
+					<div
+						key={item.dt}
+						className="flex h-full flex-col justify-between gap-6">
+						<div className="flex justify-center text-sm">{getHoursFromDate(item.dt)}</div>
+						<div className="flex items-center justify-center h-7 w-7">
+							<WeatherIcon weatherCode={item.weather[0].id} />
+						</div>
+						<div className="flex justify-center">{Math.round(item.main.temp)}&deg;</div>
+					</div>
+				))}
 			</div>
 		</>
 	);
