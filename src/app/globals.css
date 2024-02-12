@@ -18,12 +18,22 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+.forecast-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.forecast-scrollbar::-webkit-scrollbar {
+  display: none;
+  scroll-snap-type: x mandatory;
 }
 
 @layer utilities {
