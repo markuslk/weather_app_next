@@ -1,20 +1,18 @@
-import { Metadata } from "next/types";
-import CurrentWeather from "./components/CurrentWeather";
-import { DEFAULT_LOCATAION } from "./lib/config";
+import SearchBar from "../components/SearchBar";
+import { getForecastData } from "@/actions/getForecastData";
 import { getWeatherData } from "@/actions/getWeatherData";
 import { notFound } from "next/navigation";
-import { ForecastDataResponse, OpenWeatherData } from "./lib/types";
-import SearchBar from "./components/SearchBar";
-import { getForecastData } from "@/actions/getForecastData";
-import ForecastWeather from "./components/ForecastWeather";
+import CurrentWeather from "../components/CurrentWeather";
+import { ForecastDataResponse, OpenWeatherData } from "../lib/types";
+import ForecastWeather from "../components/ForecastWeather";
 
-export const metadata: Metadata = {
-	title: `${DEFAULT_LOCATAION.city} - Weather Forecast`,
-	description: `Current weather in ${DEFAULT_LOCATAION.city}`,
-};
+interface searchParamsProps {
+	lat: string;
+	lon: string;
+}
 
-export default async function Home() {
-	const { lat, lon } = DEFAULT_LOCATAION.coord;
+export default async function SearchPage({ searchParams }: { searchParams: searchParamsProps }) {
+	const { lat, lon } = searchParams;
 
 	const CurrentWeatherRequest: OpenWeatherData = await getWeatherData({ lat, lon });
 
